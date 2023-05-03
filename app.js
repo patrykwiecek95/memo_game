@@ -9,17 +9,26 @@ cards = [...cards]; //Tworzymy tablicę z listy (tu nie musimy, ale gdybyśmy u�
 const startTime = new Date().getTime(); //Pobieramy aktualną datę w milisekundach
 
 let activeCard = ""; //która karta została aktualnie kliknięta
-const activeCards = []; //tablica dla dwóch kart
+let activeCards = []; //tablica dla dwóch kart
 
 //Potrzebne do zakończenia - ile par w sumie
 const gameLength = cards.length / 2; //9
 //Informacja o wyniku - ile par udało się odgadnąć
 let gameResult = 0;
+
+
+let moves = 0;
+let stillPlay = false;
 /* Koniec PART 1 */
 
 /*PART 3 - PO KLIKNIĘCIU W KARTĘ - MINI GRA */
 const clickCard = function () {
-
+    if (stillPlay)  {
+        console.log("Game over")
+        activeCards.classList.add("hidden")
+        console.log(activeCards)
+        return;
+    }
     activeCard = this; //w co zostało kliknięte
     //console.log(event.target) //o ile przekazane event to to samo co this
 
@@ -49,61 +58,123 @@ const clickCard = function () {
             if (activeCards[0].className === activeCards[1].className) {
                 console.log("wygrane")
                 activeCards.forEach(card => card.classList.add("off"))
+                console.log(cards, "raz raz")
                 gameResult++;
                 cards = cards.filter(card => !card.classList.contains("off"));
+                console.log(cards, "dwa dwa")
+                moves++;
                 //Sprawdzenie czy nastąpił koniec gry
                 if (gameResult == gameLength) {
                     const endTime = new Date().getTime();
                     const gameTime = (endTime - startTime) / 1000
                     alert(`Udało się! Twój wynik to: ${gameTime} sekund`)
-                    location.reload();
+                    // location.reload();
                 }
             }
             //przegrana. ponowne ukrycie
             else {
                 console.log("przegrana")
                 activeCards.forEach(card => card.classList.add("hidden"))
+                moves++;
             }
             //Reset do nowej gry
             activeCard = ""; //aktywna karta pusta
             activeCards.length = 0; //długość tablicy na zero
             cards.forEach(card => card.addEventListener("click", clickCard))//przywrócenie nasłuchiwania
-
+            document.getElementById("moves").innerHTML = moves;
         }, 500)
     }
+
 };
 
 //PART 2 - LOSOWANIE, POKAZANIE I UKRYCIE, NASŁUCHIWANIE NA KLIKA
 //Funkcja po starcie zainicjowana
 const init = function () {
-    //losowanie klasy do każdego diva
-    cards.forEach(card => {
-        //pozycja z tablicy przechowującej kolory
-        const position = Math.floor(Math.random() * cardColors.length); //1
-        //dodanie klasy do danego div-a
-        card.classList.add(cardColors[position]);
-        //usunięcie wylosowanego elementu, krótsza tablica przy kolejnym losowaniu
-        cardColors.splice(position, 1);
-    })
-    //Po 2 sekundach dodanie klasy hidden - ukrycie i dodanie nasłuchiwania na klik
-    setTimeout(function () {
+
+
+
+
+
+
+        console.log("rozpoaczenie funkicji init")
+        //losowanie klasy do każdego diva
         cards.forEach(card => {
-            card.classList.add("hidden")
-            card.addEventListener("click", clickCard)
+            //pozycja z tablicy przechowującej kolory
+            const position = Math.floor(Math.random() * cardColors.length); //1
+            //dodanie klasy do danego div-a
+            card.classList.add(cardColors[position]);
+            //usunięcie wylosowanego elementu, krótsza tablica przy kolejnym losowaniu
+            cardColors.splice(position, 1);
         })
-    }, 2000)
+        //Po 2 sekundach dodanie klasy hidden - ukrycie i dodanie nasłuchiwania na klik
+        setTimeout(function () {
+            cards.forEach(card => {
+                card.classList.add("hidden")
+                card.addEventListener("click", clickCard)
+            })
+        }, 2000)
+
 };
 
+let buttonStart = document.querySelector(".button-start")
+let buttonEnd = document.querySelector(".button-end")
+let buttonRanking = document.querySelector(".button-ranking")
+let cardsBox = document.querySelector(".cards")
+let nicknameForm = document.querySelector(".nickname_form")
+let test = document.querySelector(".entry_game")
+let nickInput = document.querySelector('.nickInput');
+let movesCount = document.querySelector('.moves');
+let timeCount = document.querySelector('.time');
 
-function startGame() {
-    document.getElementById("start-button").style.display = "none";
-    document.getElementById("end-button").style.display = "block";
-    document.getElementById("cards-container").style.display = "flex";
+let nickname = ""
+nicknameForm.addEventListener("submit",event=>{
+    nickname = nickInput.value
+    if (nickname.length > 0){
+        console.log(nickname)
+        fetch('', {
+            method: "POST",
+        })
+
+        test.style.display= "none";
+    } throw new Error('write nickname')
+})
+
+let startTimex = 0;
+let timerInterval = 0;
+
+buttonStart.addEventListener("click", () => {
+    startTimex = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    buttonStart.style.display= "none";
+    buttonRanking.style.display= "none";
+    buttonEnd.style.display= "block";
+    movesCount.style.display= "block";
+    timeCount.style.display= "block";
+    cardsBox.style.display= "flex";
+    // stillPlay = false;
     init()
-}
-function endGame() {
-    document.getElementById("start-button").style.display = "block";
-    document.getElementById("end-button").style.display = "none";
-    document.getElementById("cards-container").style.display = "none";
-}
+
+    function updateTimer() {
+        let currentTime = Date.now();
+        let elapsedTime = currentTime - startTimex;
+        let seconds = Math.floor(elapsedTime / 1000);
+        document.getElementById("timer").innerHTML = seconds;
+    }
+})
+
+buttonEnd.addEventListener("click", () => {
+    buttonStart.style.display= "flex";
+    buttonRanking.style.display= "flex";
+    buttonEnd.style.display = "none";
+    cardsBox.style.display= "none";
+    movesCount.style.display= "none";
+    timeCount.style.display= "none";
+    clearInterval(timerInterval);
+    stillPlay = true;
+    console.log(cards, "end")
+    alert("game over")
+    init()
+    // buttonStart.addEventListener("click",init)
+})
+
 

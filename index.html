@@ -7,38 +7,61 @@
 </head>
 <body>
 
-<div class="menu">
-    <div id="start-button" class="button" style="display:block">
-        <a href="#" onclick="startGame()">Start Game</a>
-    </div>
-    <div id="ranking-button" class="button" style="display:block">
-        <a href="#" onclick="startGame()">Ranking</a>
-    </div>
-    <div id="end-button" class="button" style="display:none">
-        <a href="#" onclick="endGame()">End Game</a>
-    </div>
-</div>
-<div  id="cards-container" class="cards" style="display:none;">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
+<!-- Get nickname from user -->
+<div id="xxx" class="entry_game">
+<form action="" class="nickname_form">
+    <p>Sing in to play</p>
+    <p>Nickname</p>
+    <input type="text" class="nickInput" placeholder="Write your nickname and press enter">
+</form>
 </div>
 
+<!-- Menu game-->
+<div class="menu">
+<!-- Menu entry play-->
+<div class="menu-start">
+    <div id="start-button" class="button-start first">
+        <a href="#">Start Game</a>
+    </div>
+    <div id="ranking-button" class="button-ranking first">
+        <a href="#">Ranking</a>
+    </div>
+</div>
+<!-- Menu durnig play-->
+<div class="menu play">
+    <div class="button-end first" style="display:none" >
+        <a href="#">End Game</a>
+    </div>
+    <div class="time" style="display:none" >
+        <p>Time: <span id="timer"></span>s</p>
+    </div>
+    <div class="moves" style="display:none">
+        <p >Moves: <span id ="moves"></span ></p>
+    </div>
+</div>
+</div>
+
+<!-- Cards-->
+<div id="cards-container" class="cards" style="display:none">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+</div>
 <script src="app.js"></script>
 </body>
 </html>
