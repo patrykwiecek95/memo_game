@@ -1,117 +1,90 @@
 const cardColors = ["red", "red", "green", "green", "blue", "blue", "brown", "brown", "yellow", "yellow", "gray", "gray", "cadetblue", "cadetblue", "violet", "violet", "lightgreen", "lightgreen"];
 
-/* PART 1 */
-//pobranie wszystkich div-ów
-let cards = document.querySelectorAll(".card"); //NodeList; metoda getElementsByTagName tworzy HTMLCollection
-cards = [...cards]; //Tworzymy tablicę z listy (tu nie musimy, ale gdybyśmy użyli getElementsByClassName, to byśmy musieli bo tam nie ma metody forEach)
+let cards = document.querySelectorAll(".card");
+cards = [...cards];
 
+let activeCard = "";
+let activeCardsBox = [];
 
-const startTime = new Date().getTime(); //Pobieramy aktualną datę w milisekundach
-
-let activeCard = ""; //która karta została aktualnie kliknięta
-let activeCards = []; //tablica dla dwóch kart
-
-//Potrzebne do zakończenia - ile par w sumie
-const gameLength = cards.length / 2; //9
-//Informacja o wyniku - ile par udało się odgadnąć
+const gameLength = cards.length / 2;
 let gameResult = 0;
-
-
+// count moves
 let moves = 0;
 let stillPlay = false;
-/* Koniec PART 1 */
 
-/*PART 3 - PO KLIKNIĘCIU W KARTĘ - MINI GRA */
 const clickCard = function () {
     if (stillPlay)  {
         console.log("Game over")
-        activeCards.classList.add("hidden")
-        console.log(activeCards)
+        activeCardsBox.classList.add("hidden")
+        console.log(activeCardsBox)
         return;
     }
-
     console.log("Rozpoczecie ")
-    activeCard = this; //w co zostało kliknięte
-    //console.log(event.target) //o ile przekazane event to to samo co this
+    activeCard = this;
 
-    //czy to kliknięcie w ten sam element (tylko drugi może dać true) Musi być przed ukryciem dodane
-    if (activeCard == activeCards[0]) return;
+    if (activeCard === activeCardsBox[0]) return;
 
-    activeCard.classList.remove("hidden"); //ukrycie karty, która została kliknięta
+    activeCard.classList.remove("hidden"); //hidden actiived card
 
-    //czy to 1 kliknięcie, czy tablica ma długość 0
-    if (activeCards.length === 0) {
-        console.log("1 element");
-        activeCards[0] = activeCard; //przypisanie do pozycji numer 1 wybranej karty
-        return;
-
+    if (activeCardsBox.length === 0) {
+        // set activeCard on index 0
+        activeCardsBox[0] = activeCard;
     }
-    //czy to 2 kliknięcie - else bo jeśli nie pierwsze, to drugie
     else {
         console.log("2 element");
-        //na chwilę zdejmujemy możliwość kliknięcie
+        // remove possibility click
         cards.forEach(card => card.removeEventListener("click", clickCard))
-        //ustawienie drugiego kliknięcia w tablicy w indeksie 1
-        activeCards[1] = activeCard;
+        // set second activeCard on index 1
+        activeCardsBox[1] = activeCard;
 
         //Pół sekundy od odsłoniecia - decyzja czy dobrze czy źle
         setTimeout(function () {
             //sprawdzenie czy to te same karty - wygrana
-            if (activeCards[0].className === activeCards[1].className) {
+            if (activeCardsBox[0].className === activeCardsBox[1].className) {
                 console.log("wygrane")
-                activeCards.forEach(card => card.classList.add("off"))
-                console.log(cards, "raz raz")
+                activeCardsBox.forEach(card => card.classList.add("off"))
                 gameResult++;
                 cards = cards.filter(card => !card.classList.contains("off"));
-                console.log(cards, "dwa dwa")
                 moves++;
                 //Sprawdzenie czy nastąpił koniec gry
-                if (gameResult == gameLength) {
-                    const endTime = new Date().getTime();
-                    const gameTime = (endTime - startTime) / 1000
-                    alert(`Udało się! Twój wynik to: ${gameTime} sekund`)
+                if (gameResult === gameLength) {
+                    alert(`Udało się! Twój wynik to: ${"gameTime"} sekund`)
                     location.reload();
                 }
             }
-            //przegrana. ponowne ukrycie
+            //loss, hide cards again
             else {
                 console.log("przegrana")
-                activeCards.forEach(card => card.classList.add("hidden"))
+                //
+                activeCardsBox.forEach(card => card.classList.add("hidden"))
                 moves++;
             }
-            //Reset do nowej gry
-            activeCard = ""; //aktywna karta pusta
-            activeCards.length = 0; //długość tablicy na zero
-            cards.forEach(card => card.addEventListener("click", clickCard))//przywrócenie nasłuchiwania
-            document.getElementById("moves").innerHTML = moves;
+            //Reset to new game
+            activeCard = ""; //active card
+            activeCardsBox.length = 0; // length set on 0
+            cards.forEach(card => card.addEventListener("click", clickCard))//activate click
+            document.getElementById("moves").innerHTML = moves; // display moves
         }, 500)
     }
-
 };
-
-//PART 2 - LOSOWANIE, POKAZANIE I UKRYCIE, NASŁUCHIWANIE NA KLIKA
-//Funkcja po starcie zainicjowana
 const init = function () {
-        console.log("rozpoaczenie funkicji init")
-        //losowanie klasy do każdego diva
+        console.log("start function init")
+        // random class for card
         cards.forEach(card => {
-            //pozycja z tablicy przechowującej kolory
-            const position = Math.floor(Math.random() * cardColors.length); //1
-            //dodanie klasy do danego div-a
+            const position = Math.floor(Math.random() * cardColors.length);
+            //add  color class for class card
             card.classList.add(cardColors[position]);
-            //usunięcie wylosowanego elementu, krótsza tablica przy kolejnym losowaniu
+            //remove added element do cardcolor
             cardColors.splice(position, 1);
         })
-        //Po 2 sekundach dodanie klasy hidden - ukrycie i dodanie nasłuchiwania na klik
+        //set timeout after 2 sec
         setTimeout(function () {
             cards.forEach(card => {
                 card.classList.add("hidden")
                 card.addEventListener("click", clickCard)
             })
         }, 2000)
-
 };
-
 let buttonStart = document.querySelector(".button-start")
 let buttonEnd = document.querySelector(".button-end")
 let buttonRanking = document.querySelector(".button-ranking")
@@ -121,8 +94,6 @@ let get_nickname = document.querySelector(".get_nickname")
 let nickInput = document.querySelector('.nickInput');
 let movesCount = document.querySelector('.moves');
 let timeCount = document.querySelector('.time');
-
-let nickname = ""
 nicknameForm.addEventListener("submit",event=>{
     let nickname = nickInput.value
     if (nickname.length > 0){
@@ -133,12 +104,10 @@ nicknameForm.addEventListener("submit",event=>{
         get_nickname.style.display= "none";
     } throw new Error('write nickname')
 })
-
-let startTimex = 0;
+let startTime = 0;
 let timerInterval = 0;
-
 buttonStart.addEventListener("click", () => {
-    startTimex = Date.now();
+    startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
     buttonStart.style.display= "none";
     buttonRanking.style.display= "none";
@@ -146,15 +115,13 @@ buttonStart.addEventListener("click", () => {
     movesCount.style.display= "block";
     timeCount.style.display= "block";
     cardsBox.style.display= "flex";
-    // stillPlay = false;
-    init()
-
+    moves = 0;
     function updateTimer() {
         let currentTime = Date.now();
-        let elapsedTime = currentTime - startTimex;
-        let seconds = Math.floor(elapsedTime / 1000);
-        document.getElementById("timer").innerHTML = seconds;
+        let elapsedTime = currentTime - startTime;
+        document.getElementById("timer").innerHTML = Math.floor(elapsedTime / 1000);
     }
+    init()
 })
 
 buttonEnd.addEventListener("click", () => {
@@ -166,10 +133,7 @@ buttonEnd.addEventListener("click", () => {
     timeCount.style.display= "none";
     clearInterval(timerInterval);
     stillPlay = true;
-    console.log(cards, "end")
-    alert("Game Over")
-    init()
-    // buttonStart.addEventListener("click",init)
+    moves = 0;
 })
 
 
