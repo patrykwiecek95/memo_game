@@ -7,8 +7,8 @@
 </head>
 <body>
 
-<!-- Get nickname from user -->
-<div id="xxx" class="entry_game">
+<!-- Get nickname from user-->
+<div id="xxx" class="get_nickname">
 <form action="" class="nickname_form">
     <p>Sing in to play</p>
     <p>Nickname</p>
@@ -19,26 +19,26 @@
 <!-- Menu game-->
 <div class="menu">
 <!-- Menu entry play-->
-<div class="menu-start">
-    <div id="start-button" class="button-start first">
-        <a href="#">Start Game</a>
+    <div class="menu-start">
+        <div class="button-start first">
+            <a href="#">Start Game</a>
+        </div>
+        <div class="button-ranking first">
+            <a href="#">Ranking</a>
+        </div>
     </div>
-    <div id="ranking-button" class="button-ranking first">
-        <a href="#">Ranking</a>
-    </div>
-</div>
 <!-- Menu durnig play-->
-<div class="menu play">
-    <div class="button-end first" style="display:none" >
-        <a href="#">End Game</a>
+    <div class="menu-play">
+        <div class="button-end first" style="display:none" >
+            <a href="#">End Game</a>
+        </div>
+        <div class="time" style="display:none" >
+            <p>Time: <span id="timer"></span>s</p>
+        </div>
+        <div class="moves" style="display:none">
+            <p >Moves: <span id ="moves"></span ></p>
+        </div>
     </div>
-    <div class="time" style="display:none" >
-        <p>Time: <span id="timer"></span>s</p>
-    </div>
-    <div class="moves" style="display:none">
-        <p >Moves: <span id ="moves"></span ></p>
-    </div>
-</div>
 </div>
 
 <!-- Cards-->

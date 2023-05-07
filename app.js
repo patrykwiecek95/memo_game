@@ -29,6 +29,8 @@ const clickCard = function () {
         console.log(activeCards)
         return;
     }
+
+    console.log("Rozpoczecie ")
     activeCard = this; //w co zostało kliknięte
     //console.log(event.target) //o ile przekazane event to to samo co this
 
@@ -68,7 +70,7 @@ const clickCard = function () {
                     const endTime = new Date().getTime();
                     const gameTime = (endTime - startTime) / 1000
                     alert(`Udało się! Twój wynik to: ${gameTime} sekund`)
-                    // location.reload();
+                    location.reload();
                 }
             }
             //przegrana. ponowne ukrycie
@@ -90,12 +92,6 @@ const clickCard = function () {
 //PART 2 - LOSOWANIE, POKAZANIE I UKRYCIE, NASŁUCHIWANIE NA KLIKA
 //Funkcja po starcie zainicjowana
 const init = function () {
-
-
-
-
-
-
         console.log("rozpoaczenie funkicji init")
         //losowanie klasy do każdego diva
         cards.forEach(card => {
@@ -121,21 +117,20 @@ let buttonEnd = document.querySelector(".button-end")
 let buttonRanking = document.querySelector(".button-ranking")
 let cardsBox = document.querySelector(".cards")
 let nicknameForm = document.querySelector(".nickname_form")
-let test = document.querySelector(".entry_game")
+let get_nickname = document.querySelector(".get_nickname")
 let nickInput = document.querySelector('.nickInput');
 let movesCount = document.querySelector('.moves');
 let timeCount = document.querySelector('.time');
 
 let nickname = ""
 nicknameForm.addEventListener("submit",event=>{
-    nickname = nickInput.value
+    let nickname = nickInput.value
     if (nickname.length > 0){
         console.log(nickname)
-        fetch('', {
-            method: "POST",
-        })
-
-        test.style.display= "none";
+        // fetch('', {
+        //     method: "POST",
+        // })
+        get_nickname.style.display= "none";
     } throw new Error('write nickname')
 })
 
@@ -172,7 +167,7 @@ buttonEnd.addEventListener("click", () => {
     clearInterval(timerInterval);
     stillPlay = true;
     console.log(cards, "end")
-    alert("game over")
+    alert("Game Over")
     init()
     // buttonStart.addEventListener("click",init)
 })

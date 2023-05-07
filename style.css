@@ -5,13 +5,13 @@
 }
 
 body{
-    /*position: relative;*/
+    position: relative;
     height: 100vh;
     width: 100%;
     background-color: #2C3E50;
 }
 
-.entry_game{
+.get_nickname{
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -22,9 +22,9 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 300px;
-    width: 300px;
-    background-color: white;
+    height: 200px;
+    width: 400px;
+    background-color: #F1C40F;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -34,28 +34,42 @@ body{
 
 .nickname_form p {
     font-size: 26px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: white;
+}
+.nickInput {
+    display: inline-block;
+    width: 80%;
+    margin: 0 auto 0 auto;
+    height: 40px;
+    border-radius: 20px;
+    border: 2px white;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    color: #000000;
     font-weight: 700;
 }
-.nickInput{
-    height: 22px;
-    font-size: 16px;
-    text-align: center;
-}
-
 .menu {
     width: 100%;
 }
 
-.menu .start{
-    font-size: 26px;
-    margin: 15px auto 0 auto;
+.menu-start{
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
-.button-start,.button-end, .button-ranking {
-    /*display: inline-block;*/
+
+.menu-play{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.button-start,.button-end, .button-ranking, .time, .moves {
     box-sizing: border-box;
-    appearance: none;
     background-color: transparent;
     border: 2px solid #F1C40F;
     border-radius: 10px;
@@ -68,10 +82,9 @@ body{
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    width: 200px;
 }
 
-.button-start a,.button-ranking a, .button-end a {
+.button-start a,.button-ranking a, .button-end a, .time p , .moves p {
     color: #F1C40F;
 }
 .button-start:hover a,.button-end:hover a, .button-ranking:hover a {
@@ -94,13 +107,14 @@ a{
 .cards {
     display: flex;
     flex-wrap: wrap;
+    background-color: #2C3E50;
 }
 .card {
     flex-basis: 15%;
     flex-grow: 1;
     height: calc(33vh - 50px);
-    border: 4px solid #fff;
-    background-color: #000;
+    border: 4px solid #2C3E50;
+    /*background-color: #000;*/
 }
 @media (orientation: portrait) {
     .card {
