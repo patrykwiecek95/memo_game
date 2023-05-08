@@ -62,8 +62,6 @@ const clickCard = function () {
                     clearInterval(timerInterval);
                     document.getElementById('nickname').innerHTML = nickname; // display moves
                     winPanel.style.display = 'block';
-                    // alert(`Udało się! Twój wynik to: ${'gameTime'} sekund`);
-                    // location.reload();
                 }
             }
             //loss, hide cards again
@@ -113,7 +111,7 @@ const init = function () {
     //set timeout after 2 sec
     setTimeout(function () {
         cards.forEach(card => {
-            // card.classList.add('hidden');
+            card.classList.add('hidden');
             card.addEventListener('click', clickCard);
         });
     }, 2000);
