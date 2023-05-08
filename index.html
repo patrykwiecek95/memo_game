@@ -8,17 +8,30 @@
 <body>
 
 <!-- Get nickname from user-->
-<div id="xxx" class="get_nickname">
-<form action="" class="nickname_form">
-    <p>Sing in to play</p>
-    <p>Nickname</p>
-    <input type="text" class="nickInput" placeholder="Write your nickname and press enter">
-</form>
+<div class="get_nickname">
+    <form action="" class="nickname_form">
+        <p>Sing in to play</p>
+        <p>Nickname</p>
+        <input type="text" class="nickInput" placeholder="Write your nickname and press enter">
+    </form>
 </div>
 
+<div class="winPanel" style="display:none" >
+    <div class="menu-win">
+        <div class="msg-win">
+            You win! <span id ="nickname"></span > !
+        </div>
+        <div class="button-restart first">
+            <a href="#">Restart game</a>
+        </div>
+        <div class="button-quit first">
+            <a href="#">Quit game</a>
+        </div>
+    </div>
+</div>
 <!-- Menu game-->
 <div class="menu">
-<!-- Menu entry play-->
+    <!-- Menu entry play-->
     <div class="menu-start">
         <div class="button-start first">
             <a href="#">Start Game</a>
@@ -27,7 +40,7 @@
             <a href="#">Ranking</a>
         </div>
     </div>
-<!-- Menu durnig play-->
+    <!-- Menu durnig play-->
     <div class="menu-play">
         <div class="button-end first" style="display:none" >
             <a href="#">End Game</a>
@@ -39,6 +52,13 @@
             <p >Moves: <span id ="moves"></span ></p>
         </div>
     </div>
+</div>
+
+
+
+<div class="ranking-score" style="display:none">
+    <h2>High Scores</h2>
+    <ul id="high-scores"></ul>
 </div>
 
 <!-- Cards-->
@@ -65,5 +85,7 @@
 <script src="app.js"></script>
 </body>
 </html>
+
+
 
 
